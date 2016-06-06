@@ -1,3 +1,4 @@
+<%@page import="accesodato.Conexion"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -37,10 +38,28 @@
             <div class="row">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Editar Ciudades</h3>
+                        <h3 class="panel-title">Actualizar Usuario</h3>
                     </div>
+                    <% 
+                        int id=Integer.parseInt(request.getParameter("editar"));
+                        Conexion con=new Conexion();
+                        con.setConsulta("select * from Ciudades where ciudad_id='"+id+"'");
+                    %>
                     <div class="panel-body">
-                   
+                        <% while(con.getResultado().next()){  %>
+                        
+                        <form method="POST" action="../ServletCiudad?editar=si">
+                            <!-- OJO CON EL CAMPO READONLY QUE ES ENVIADO POR EL FORMULARIO PARA ACTUALIZAR -->
+                            <input type="text" readonly="true" value='<% out.println(""+con.getResultado().getString("ciudad_id")); %>' name="id">
+                            <div class="form-group">
+                                <label for="nombre">Nombre </label>
+                                <input type="text" class="form-control" name="nombre" value='<% out.println(""+con.getResultado().getString("nombre")); %>' id="nombre" placeholder="Ingresar Nombre">
+                            </div>
+                           
+                            
+                            <button type="submit" class="btn btn-default">ACTUALIZAR</button>
+                        </form>
+                       <% } %> 
 
                     </div>
                 </div>

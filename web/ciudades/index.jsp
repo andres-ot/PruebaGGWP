@@ -26,7 +26,7 @@
                 </div>
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        
+
                         <li><a href="../usuarios/index.jsp">Usuarios</a></li>
                         <li><a href="index.jsp">Ciudades</a></li>
                     </ul>
@@ -42,27 +42,30 @@
                         <h3 class="panel-title">Listar Ciudades</h3>
                     </div>
                     <div class="panel-body">
-                         <a href="crear.jsp" class="btn btn-primary">NUEVO CIUDAD</a>
+                        <a href="crear.jsp" class="btn btn-primary">NUEVO CIUDAD</a>
                         <br><br>
                         <table class="table table-condensed table-hover table-bordered">
                             <thead>
-                                <th>ID</th>
-                                <th>NOMBRE</th>
-                                <th>Acciones</th>
+                            <th>ID</th>
+                            <th>NOMBRE</th>
+                            <th>Acciones</th>
                             </thead>
                             <tbody>
                                 <%
-                                   Conexion con=new Conexion();
-                                   con.setConsulta("select * from Ciudades");
-                                   while(con.getResultado().next()){
-                                    out.println("<tr>");
-                                       out.println("<td>"+con.getResultado().getString("ciudad_id")+"</td>");
-                                       out.println("<td>"+con.getResultado().getString("nombre")+"</td>");
-                                    out.println("</tr>");
-                                   }
+                                    Conexion con = new Conexion();
+                                    con.setConsulta("select * from Ciudades where estado='Activo'");
+                                    while (con.getResultado().next()) {
+                                        out.println("<tr>");
+                                        out.println("<td>" + con.getResultado().getString("ciudad_id") + "</td>");
+                                        out.println("<td>" + con.getResultado().getString("nombre") + "</td>");
+                                        out.println("<td>" + "<a href='../ServletCiudad?eliminar=" + con.getResultado().getString("ciudad_id") + "' class='btn btn-danger'>Eliminar</a>" + "</td>");
+                                        out.println("<td>" + "<a href='editar.jsp?editar=" + con.getResultado().getString("ciudad_id") + "' class='btn btn-primary'>Editar</a>" + "</td>");
+
+                                        out.println("</tr>");
+                                    }
                                 %>
                             </tbody>
-                            
+
                         </table>
                     </div>
                 </div>

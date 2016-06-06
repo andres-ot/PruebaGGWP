@@ -47,11 +47,11 @@ public class Ciudad {
     public void crear(){
        con.setInsertar("insert into Ciudades(nombre,estado) values('"+this.getNombre()+"','Activo')");
     }
-    //SE CREAR EL METODO ELIMINAR PARA HACER UN INSERT UTILIZANDO LOS METODOS GET DE LA CLASE
+    
     public void eliminar(){
-      con.setInsertar("update Ciudades set estado='Pasivo' where usuario_id='"+this.getCiudad_id()+"'");
+      con.setInsertar("update Ciudades set estado='Pasivo' where ciudad_id='"+this.getCiudad_id()+"'");
     }
-    //SE CREAR EL ACTUALIZARCREAR PARA HACER UN INSERT UTILIZANDO LOS METODOS GET DE LA CLASE
+    
     public void actualizar(){
       con.setInsertar("update Ciudades set nombre='"+this.getNombre()+"' where ciudad_id='"+this.ciudad_id+"'");
     }

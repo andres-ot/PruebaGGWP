@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import negocio.Ciudad;
 
 /**
  *
@@ -33,11 +34,39 @@ public class ServletCiudad extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-                //ESTA PARTE VA NUESTRO CODIGO
-                String nombre=request.getParameter("nombre");
-                Conexion con=new Conexion();
-                con.setInsertar("insert into Ciudades(nombre) values('"+nombre+"')");
+            Ciudad city = new Ciudad();
+            if (request.getParameter("eliminar") != null) {
+                int eliminar_id = Integer.parseInt(request.getParameter("eliminar"));
+                city.setCiudad_id(eliminar_id);
+                city.eliminar();
                 response.sendRedirect("ciudades/index.jsp");
+                // SI LA VARIABLE ENVIADA DESDE EDITAR.JSP DE NOMBRE EDITAR NO VIENE VACIA "RECIBE LOS DATOS"
+            } else if (request.getParameter("editar") != null) {
+                // OJO CON LA VARIABLE ID QUE ESTA EN EL CAMPO HIDDEN DEL FORMULARIO EDITAR
+                int id = Integer.parseInt(request.getParameter("id"));
+                String nombre = request.getParameter("nombre");
+
+                
+                city.setCiudad_id(id);
+                city.setNombre(nombre);
+
+                //SE LLAMA AL METODO ACTUALIZAR DE LA CLASE USUARIO
+                city.actualizar();
+                //SE REDIRECCIONA AL INDEX
+                response.sendRedirect("ciudades/index.jsp");
+            } // EN CASO DE QUE NO SE ELIMINE NI SE ACTUALICE SE GUARDA
+            else {
+                String nombre = request.getParameter("nombre");
+
+                //int ciudad_id = Integer.parseInt(request.getParameter("ciudad_id"));
+
+                city.setNombre(nombre);
+
+                //city.setCiudad_id(ciudad_id);
+                city.crear();
+                response.sendRedirect("ciudades/index.jsp");
+
+            }
         }
     }
 
