@@ -5,6 +5,8 @@
  */
 package negocio;
 
+import accesodato.Conexion;
+
 /**
  *
  * @author ricardotoledo
@@ -13,6 +15,12 @@ public class Ciudad {
     private int ciudad_id;
     private String nombre;
     private String estado;
+    Conexion con;
+    
+    public Ciudad(){
+    con = new Conexion();
+    }
+    
     public int getCiudad_id() {
         return ciudad_id;
     }
@@ -27,7 +35,7 @@ public class Ciudad {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
+        }
     public void setEstado(String estad){
         this.estado=estado;
     }
@@ -37,13 +45,15 @@ public class Ciudad {
     
         
     public void crear(){
-        
+       con.setInsertar("insert into Ciudades(nombre,estado) values('"+this.getNombre()+"','Activo')");
     }
+    //SE CREAR EL METODO ELIMINAR PARA HACER UN INSERT UTILIZANDO LOS METODOS GET DE LA CLASE
     public void eliminar(){
-    
+      con.setInsertar("update Ciudades set estado='Pasivo' where usuario_id='"+this.getCiudad_id()+"'");
     }
+    //SE CREAR EL ACTUALIZARCREAR PARA HACER UN INSERT UTILIZANDO LOS METODOS GET DE LA CLASE
     public void actualizar(){
-    
+      con.setInsertar("update Ciudades set nombre='"+this.getNombre()+"' where ciudad_id='"+this.ciudad_id+"'");
     }
     
 }
